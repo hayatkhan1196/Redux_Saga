@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    function App(props){
+ 
+    return (
+      <div className="App">
+        <div className="Age-label">
+          your age: <span>{props.age}</span>
+          </div>
+        <div className='button_up_down'>
+        <button className='btn_up' onClick={props.onAgeUp}>Age UP</button>
+        <button className='btn_down' onClick={props.onAgeDown}>Age Down</button>
+        </div>
+      </div>
+    );
+  }
 
-export default App;
+
+const mapStateToProps = state => {
+  return {
+    age: state.age
+  };
+};
+
+const mapDispachToProps = dispatch => {
+  return {
+    onAgeUp: () => dispatch({ type: "AGE_UP_ASYNC", value: 1 }),
+    onAgeDown: () => dispatch({ type: "AGE_DOWN", value: 1 })
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispachToProps
+)(App);
