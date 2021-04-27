@@ -1,22 +1,31 @@
-import React from "react";
-import ReactDOM from "react-dom";
-// import reportWebVitals from "./reportWebVitals";
-import App from "./App";
-import reducer from "./store/reducer";
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import createSagaMiddleware from "redux-saga";
-import { watchAgeUp } from "./Saga/saga";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {createStore, applyMiddleware, compose} from 'redux';
+import {Provider} from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer from './reducers';
+import rootSaga from './sagas';
+import App from './App';
 
+// Creating the SAGA middleware
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(watchAgeUp);
+// mount it on the Store
+const store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(sagaMiddleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+);
+
+// then run the saga
+sagaMiddleware.run(rootSaga);
 ReactDOM.render(
   <Provider store={store}>
-    <App /> 
+    <App />
   </Provider>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

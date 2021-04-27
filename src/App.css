@@ -36,4 +36,6 @@
 }
 .Age-label {
   margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
 }

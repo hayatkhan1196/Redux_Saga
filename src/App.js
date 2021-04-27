@@ -1,36 +1,32 @@
-import React, { Component } from "react";
-import "./App.css";
-import { connect } from "react-redux";
+import React from 'react';
+import {connect} from 'react-redux';
+import {INCREMENT_COUNTER_REQUEST} from './types';
+import './App.css';
 
-    function App(props){
- 
-    return (
-      <div className="App">
-        <div className="Age-label">
-          your age: <span>{props.age}</span>
-          </div>
-        <div className='button_up_down'>
-        <button className='btn_up' onClick={props.onAgeUp}>Age UP</button>
-        <button className='btn_down' onClick={props.onAgeDown}>Age Down</button>
-        </div>
+function App({onAgeLatest, incrementCounter, counter}) {
+  return (
+    <div className="App">
+      <div className="Age-label">
+        your age: <span>{counter}</span>
+        {/* latest age:<span>{latest_Age}</span> */}
       </div>
-    );
-  }
+      <div className="button_up_down">
+        <button className="btn_up" onClick={incrementCounter}>
+          Age UP
+        </button>
+        <button className="btn_down" onClick={onAgeLatest}>
+          Latest age
+        </button>
+      </div>
+    </div>
+  );
+}
+const mapStateToProps = (state) => ({
+  counter: state.counter.counter,
+});
+const mapDispatchToProps = (dispatch) => ({
+  incrementCounter: () =>
+    dispatch({type: INCREMENT_COUNTER_REQUEST, counter: 1}),
+});
 
-
-const mapStateToProps = state => {
-  return {
-    age: state.age
-  };
-};
-
-const mapDispachToProps = dispatch => {
-  return {
-    onAgeUp: () => dispatch({ type: "AGE_UP_ASYNC", value: 1 }),
-    onAgeDown: () => dispatch({ type: "AGE_DOWN", value: 1 })
-  };
-};
-export default connect(
-  mapStateToProps,
-  mapDispachToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
