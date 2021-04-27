@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# today work update
+I have to connect it to the Redux Store using the redux-saga middleware.
+Next ihave  connect the onIncrementAsync of the Component to a Store action.
+Our worker Saga: will perform the async increment task and simple i have work on two method (put ,takevery).
+
 ## Available Scripts
 
 In the project directory, you can run:
